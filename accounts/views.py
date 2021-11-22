@@ -16,7 +16,3 @@ class RegisterApi(CreateAPIView):
         return Response({
             'message':'User Successfully Created...'
         })
-        
-
-
-# Create your views here.
