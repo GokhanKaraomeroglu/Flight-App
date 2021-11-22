@@ -28,7 +28,11 @@ class FlightView(viewsets.ModelViewSet):
       if self.request.user.is_staff:
         return super().get_request()
       else:
-        queryset = Flight.objects.filter(dateOfDeparture_gte=today).filter(estimatedTimeOfDeparture_gt=current_time)
+        queryset = Flight.objects.filter(dateOfDepature__gt=today)
+        if Flight.objects.filter(dateOfDepature=today):
+            today_qs = Flight.objects.filter(dateOfDepature=today).filte(estimatedTimeOfDeparture__gt=now)
+            queryset = queryset.union(today_qs)
+        return queryset
   
 class ReservationView(viewsets.ModelViewSet):
   queryset = Reservation.objects.all()
